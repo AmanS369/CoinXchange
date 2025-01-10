@@ -42,22 +42,23 @@ const getCryptoStats = async (req, res) => {
       return res.status(400).send({ error: "Coin parameter is required" });
     }
 
-    const latestData = await CryptoData.findOne({ coinId: coin }).sort({
-      timestamp: -1,
-    });
+    const latestData = await axios.get(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd&include_market_cap=true&include_24hr_change=true&x_cg_demo_api_key=${
+        process.env.COINGECKO_API_KEY || ""
+      }`,
+    );
 
     if (!latestData) {
       return res
         .status(404)
         .send({ error: "No data found for the specified coin" });
     }
-
+    console.log(latestData.data);
+    const current_data = latestData.data;
     res.status(200).send({
-      coin: latestData.coinId,
-      priceUSD: latestData.priceUSD,
-      marketCapUSD: latestData.marketCapUSD,
-      change24h: latestData.change24h,
-      timestamp: latestData.timestamp,
+      price: current_data[coin].usd,
+      marketCap: current_data[coin].usd_market_cap,
+      change24h: current_data[coin].usd_24h_change,
     });
   } catch (error) {
     console.error("Error fetching stats:", error);
@@ -106,4 +107,40 @@ const getDeviation = async (req, res) => {
   }
 };
 
-export default { fetchCryptoData, getCryptoStats, getDeviation };
+const getMarketChart = async (req, res) => {
+  const { coin, days } = req.query;
+
+  if (!coin || !days) {
+    return res
+      .status(400)
+      .json({ error: "Coin and days parameters are required." });
+  }
+
+  try {
+    const response = await axios.get(
+      `https://api.coingecko.com/api/v3/coins/${coin}/market_chart?vs_currency=usd&days=30&interval=daily&x_cg_demo_api_key=${
+        process.env.COINGECKO_API_KEY || ""
+      }`,
+      {
+        params: {
+          vs_currency: "usd",
+          days,
+        },
+      },
+    );
+
+    res.status(200).json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json({
+      error:
+        error.response?.data?.error || "Failed to fetch data from CoinGecko",
+    });
+  }
+};
+
+export default {
+  fetchCryptoData,
+  getCryptoStats,
+  getDeviation,
+  getMarketChart,
+};

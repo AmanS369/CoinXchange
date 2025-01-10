@@ -8,4 +8,5 @@ router.get("/fetch", cryptoController.fetchCryptoData);
 // Route to get stats for a specific cryptocurrency
 router.get("/stats", cryptoController.getCryptoStats);
 router.get("/deviation", cryptoController.getDeviation);
+router.get("/market-chart", cryptoController.getMarketChart);
 export default router;

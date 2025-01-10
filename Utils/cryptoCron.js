@@ -2,7 +2,7 @@ import cron from "node-cron";
 import cryptoController from "../Controllers/cryptoController.js";
 // Schedule the cron job to run every 5 minutes
 const startCryptoCron = () => {
-  cron.schedule("*/1 * * * *", async () => {
+  cron.schedule("0 */2 * * *", async () => {
     console.log("Cron Job Started: Fetching cryptocurrency data...");
     try {
       // Call the fetchCryptoData function without req and res
