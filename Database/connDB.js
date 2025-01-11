@@ -5,7 +5,7 @@ const connDB = async () => {
     const con = await mongoose.connect(process.env.DATABASE);
     console.log("connecteed successfuly to the database");
   } catch (e) {
-    console.log(e);
+    e;
   }
 };
 export default connDB;

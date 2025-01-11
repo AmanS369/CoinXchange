@@ -11,6 +11,7 @@ dotenv.config();
 connDB();
 // Middleware
 app.use(express.json());
+
 app.use(
   cors({
     origin: process.env.CORS_ORIGIN,

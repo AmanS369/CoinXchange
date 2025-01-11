@@ -7,7 +7,7 @@ This repository contains my submission for the **KoinX Backend Internship Assign
 ## Important Links:
 
 - Frontend Depolyment Link : [CryptoXchange Frontend](https://coin-xchange-frontend.vercel.app/)
-- Backend Depolyment Link : [CryptoXchange Backend](https://coin-xchange-wine.vercel.app)
+- Backend Depolyment Link : [CryptoXchange Backend](https://coinxchange-wn56.onrender.com/)
 - The Backend repo : [Backend ](https://github.com/AmanS369/CoinXchange)
 - The frontend repo : [Frontend](https://github.com/AmanS369/CoinXchange_Frontend)
 
